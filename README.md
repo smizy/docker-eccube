@@ -2,7 +2,7 @@
 
 [EC-CUBE3](http://www.ec-cube.net)  docker-compose sample for development
 
-* sendmail missing
+* sendmail is not set.
 
 ## Setup
 ```
