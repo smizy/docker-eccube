@@ -25,7 +25,7 @@ docker_postgres_1   entrypoint.sh postgres   Up      5432/tcp
 
 
 # browse install page
-$ open http://localhost:8080/html/install.php
+$ open http://localhost:8080/install.php
 ```
 
 * step1: php extension auto check:  next
@@ -33,18 +33,29 @@ $ open http://localhost:8080/html/install.php
 * step3: shop setting: input and next
 * step4: database setting: input the below and next
     * hostname: postgres
-    * port: 5432
     * dbname: cube3_dev
     * user: cube3_dev_user
     * password: ********** 
         * set the same password as docker/postgres/01_init.sql
 * step5: database table initialization processed then redirected 
-* step6: complete. go to admin page 
-* admin: login 
+* step6: complete. go to admin page
+* admin: login
+
 
 ```
-# clean up
+# Remove /html path prefix in URL
+sed -i.bak \
+  -e 's#^image_path: /html/#image_path: /#' \
+  -e 's#^root_urlpath: null#root_urlpath: /#' \
+  -e 's#^public_path: /html#public_path: /#' \
+  ec-cube/app/config/eccube/path.yml
+```
+
+```
+# stop container 
 docker-compose stop
-docker-compose rm -fv
+
+# clean up container (Note that -v option removes database container volume)
+docker-compose rm -fv 
 ```
 
